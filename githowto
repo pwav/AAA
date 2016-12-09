@@ -1,0 +1,627 @@
+nux
+yum install git
+apt-get install git
+zypper in git
+ Mac
+Git for Mac OS X
+brew install git
+ Windows
+git for windows
+Цели
+Полная готовность к работе с Git.
+01Установка имени и электронной почты
+Если вы никогда ранее не использовали git, для начала вам необходимо осуществить установку. Выполните следующие команды, чтобы git узнал ваше имя и электронную почту. Если git уже установлен, можете переходить к разделу окончания строк.
+ВЫПОЛНИТЬ:
+git config --global user.name "Your Name"
+git config --global user.email "your_email@whatever.com"
+02Параметры установки окончаний строк
+Также, для пользователей Unix/Mac:
+ВЫПОЛНИТЬ:
+git config --global core.autocrlf input
+git config --global core.safecrlf true
+Для пользователейWindows:
+ВЫПОЛНИТЬ:
+git config --global core.autocrlf true
+git config --global core.safecrlf true
+ 2. Финальные приготовления
+Цели
+Установить материалы учебника и подготовить их к работе.
+01Скачайте учебные материалы
+Скачайте учебные материалы здесь:
+http://githowto.com/git_tutorial.zip
+02Распакуйте учебные материалы
+Пакет учебных материалов должен иметь главную папку «git_tutorial» с двумя подпапками:
+work — пустой рабочий каталог. Здесь будут лежать ваши репозитории.
+files — заранее упакованные файлы для того, чтобы вы могли продолжить работать с учебными материалами на любом этапе. Если вы застрянете, просто скопируйте нужный урок в свою рабочую папку.
+3. Создание проекта
+Цели
+Научиться создавать git репозиторий с нуля.
+01Создайте страницу «Hello, World»
+Начните работу в пустом рабочем каталоге (например Work, если вы скачали архив с предыдущего шага) с создания пустого каталога с именем «hello», затем войдите внего и создайте там файл с именем hello.html с таким содержанием.
+ВЫПОЛНИТЕ:
+mkdir hello
+cd hello
+touch hello.html
+ФАЙЛ: hello.html
+Hello, World
+02Создайте репозиторий
+Теперь у вас есть каталог с одним файлом. Чтобы создать git репозиторий из этого каталога, выполните команду git init.
+ВЫПОЛНИТЕ:
+git init
+РЕЗУЛЬТАТ:
+$ git init
+Initialized empty Git repository in /Users/alex/Documents/Presentations/githowto/auto/hello/.git/
+
+
+03Добавьте страницу в репозиторий
+Теперь давайте добавим в репозиторий страницу «Hello, World».
+ВЫПОЛНИТЕ:
+git add hello.html
+git commit -m "First Commit"
+Вы увидите …
+РЕЗУЛЬТАТ:
+$ git add hello.html
+$ git commit -m "First Commit"
+[master (root-commit) 911e8c9] First Commit
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 hello.html
+4. Проверка состояния
+Цели
+Научиться проверять состояние репозитория
+01Проверьте состояние репозитория
+Используйте команду git status, чтобы проверить текущее состояние репозитория.
+ВЫПОЛНИТЕ:
+git status
+Вы увидите
+РЕЗУЛЬТАТ:
+$ git status
+# On branch master
+nothing to commit (working directory clean)
+Команда проверки состояния сообщит, что коммитить нечего. Это означает, что в репозитории хранится текущее состояние рабочего каталога, и нет никаких изменений, ожидающих записи.
+Мы будем использовать команду git status, чтобы продолжать отслеживать состояние репозитория и рабочего каталога.
+
+
+5. Внесение изменений
+Цели
+Научиться отслеживать состояние рабочего каталога
+01Измените страницу «Hello, World»
+Добавим кое-какие HTML-теги к нашему приветствию. Измените содержимое файла на:
+ФАЙЛ: hello.html
+<h1>Hello, World!</h1>
+02Проверьте состояние
+Теперь проверьте состояние рабочего каталога.
+ВЫПОЛНИТЕ:
+git status
+Вы увидите …
+РЕЗУЛЬТАТ:
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#   modified:   hello.html
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+Первое, что нужно заметить, это то, что git знает, что файл hello.html был изменен, но при этом эти изменения еще не зафиксированы в репозитории.
+Также обратите внимание на то, что сообщение о состоянии дает вам подсказку о том, что нужно делать дальше. Если вы хотите добавить эти изменения в репозиторий, используйте команду git add. В противном случае используйте команду git сheckoutдля отмены изменений.
+03А далее...
+Давайте проиндексируем изменения.
+6. Индексация изменений
+Цели
+Научиться индексировать изменения для последующих коммитов
+01Добавьте изменения
+Теперь дайте команду git проиндексировать изменения. Проверьте состояние
+ВЫПОЛНИТЕ:
+git add hello.html
+git status
+Вы увидите…
+РЕЗУЛЬТАТ:
+$ git add hello.html
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#   modified:   hello.html
+#
+Изменения файла hello.html были проиндексированы. Это означает, что git теперь знает об изменении, но изменение пока не перманентно (читай, навсегда) записано в репозиторий. Следующий коммит будет включать в себя проиндексированные изменения.
+Если вы решили, что не хотите коммитить изменения, команда состояния напомнит вам о том, что с помощью команды git resetможно снять индексацию этих изменений.
+7. Индексация и коммит
+Отдельный шаг индексации в git позволяет вам продолжать вносить изменения в рабочий каталог, а затем, в момент, когда вы захотите взаимодействовать с версионным контролем, git позволит записать изменения в малых коммитах, которые фиксируют то, что вы сделали.
+Предположим, что вы отредактировали три файла (a.html, b.html, и c.html). Теперь вы хотите закоммитить все изменения, при этом чтобы изменения в a.html и b.html были одним коммитом, в то время как изменения в c.html логически не связаны с первыми двумя файлами и должны идти отдельным коммитом.
+В теории, вы можете сделать следующее:
+git add a.html
+git add b.html
+git commit -m "Changes for a and b"
+git add c.html
+git commit -m "Unrelated change to c"
+Разделяя индексацию и коммит, вы имеете возможность с легкостью настроить, что идет в какой коммит.
+8. Коммит изменений
+Цели
+Научиться коммитить изменения в репозиторий
+01Закоммитьте изменения
+Достаточно об индексации. Давайте сделаем коммит того, что мы проиндексировали, в репозиторий.
+Когда вы ранее использовали git commit для коммита первоначальной версии файла hello.html в репозиторий, вы включили метку -m, которая делает комментарий в командной строке. Команда commit позволит вам интерактивно редактировать комментарии для коммита. Теперь давайте это проверим.
+Если вы опустите метку -m из командной строки, git перенесет вас в редактор по вашему выбору. Редактор выбирается из следующего списка (в порядке приоритета):
+переменная среды GIT_EDITOR
+параметр конфигурации core.editor
+переменная среды VISUAL
+переменная среды EDITOR
+У меня переменная EDITOR установлена в emacsclient (доступен для Linux и Mac).
+Сделайте коммит сейчас и проверьте состояние.
+ВЫПОЛНИТЕ:
+git commit
+Вы увидите в вашем редакторе:
+РЕЗУЛЬТАТ:
+|
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#   modified:   hello.html
+#
+В первой строке введите комментарий: «Added h1 tag». Сохраните файл и выйдите из редактора (для этого в редакторе по-умолчанию (Vim) вам нужно нажать клавишу ESC, ввести :wq и нажать Enter). Вы увидите…
+РЕЗУЛЬТАТ:
+git commit
+Waiting for Emacs...
+[master 569aa96] Added h1 tag
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+Строка «Waiting for Emacs…» получена из программы emacsclient, которая посылает файл в запущенную программу emacs и ждет его закрытия. Остальные выходные данные – стандартные коммит-сообщения.
+02Проверьте состояние
+В конце давайте еще раз проверим состояние.
+ВЫПОЛНИТЕ:
+git status
+Вы увидите…
+РЕЗУЛЬТАТ:
+$ git status
+# On branch master
+nothing to commit (working directory clean)
+Рабочий каталог чистый, можете продолжить работу.
+9. Изменения, а не файлы
+Цели
+Понять, что git работает с изменениями, а не файлами.
+Большинство систем версионного контроля работают с файлами. Вы добавляете файл в версионный контроль, а система отслеживает изменения файла с этого момента.
+Git фокусируется на изменениях в файле, а не самом файле. Когда вы осуществляете команду git add file, вы не говорите git добавить файл в репозиторий. Скорее вы говорите, что git надо отметить текущее состояние файла, коммит которого будет произведен позже.
+Мы попытаемся исследовать эту разницу в данном уроке.
+01Первое изменение: Добавьте стандартные теги страницы
+Измените страницу «Hello, World», чтобы она содержала стандартные теги <html> и <body>.
+ФАЙЛ: hello.html
+<html>
+  <body>
+    <h1>Hello, World!</h1>
+  </body>
+</html>
+02Добавьте это изменение
+Теперь добавьте это изменение в индекс git.
+ВЫПОЛНИТЕ:
+git add hello.html
+03Второе изменение: Добавьте заголовки HTML
+Теперь добавьте заголовки HTML (секцию <head>) к странице «Hello, World».
+ФАЙЛ: hello.html
+<html>
+  <head>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+  </body>
+</html>
+04Проверьте текущий статус
+ВЫПОЛНИТЕ:
+git status
+Вы увидите…
+РЕЗУЛЬТАТ:
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#   modified:   hello.html
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#   modified:   hello.html
+#
+Обратите внимание на то, что hello.html указан дважды в состоянии. Первое изменение (добавление стандартных тегов) проиндексировано и готово к коммиту. Второе изменение (добавление заголовков HTML) является непроиндексированным. Если бы вы делали коммит сейчас, заголовки не были бы сохранены в репозиторий.
+Давайте проверим.
+05Коммит
+Произведите коммит проиндексированного изменения (значение по умолчанию), а затем еще раз проверьте состояние.
+ВЫПОЛНИТЕ:
+git commit -m "Added standard HTML page tags"
+git status
+Вы увидите…
+РЕЗУЛЬТАТ:
+$ git commit -m "Added standard HTML page tags"
+[master 8c32287] Added standard HTML page tags
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#   modified:   hello.html
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+Состояние команды говорит о том, что hello.html имеет незафиксированные изменения, но уже не в буферной зоне.
+06Добавьте второе изменение
+Теперь добавьте второе изменение в индекс, а затем проверьте состояние с помощью команды git status.
+ВЫПОЛНИТЕ:
+git add .
+git status
+Примечание: В качестве файла для добавления, мы использовали текущий каталог («.»). Это самый краткий и удобный путь для добавления всех изменений в файлы текущего каталога и его подкаталоги. Но поскольку он добавляет все, не лишним будет проверить состояние перед запуском add, просто чтобы убедиться, что вы не добавили какой-то файл, который добавлять было не нужно.
+Я хотел показать вам трюк с add, далее мы будем на всякий случай продолжать добавлять явные файлы.
+Вы увидите…
+РЕЗУЛЬТАТ:
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#   modified:   hello.html
+#
+Второе изменение было проиндексировано и готово к коммиту.
+07Сделайте коммит второго изменения
+ВЫПОЛНИТЕ:
+git commit -m "Added HTML header"
+10. История
+Цели
+Научиться просматривать историю проекта.
+Получение списка произведенных изменений — функция команды git log.
+ВЫПОЛНИТЕ:
+git log
+Вы увидите…
+РЕЗУЛЬТАТ:
+$ git log
+commit fa3c1411aa09441695a9e645d4371e8d749da1dc
+Author: Alexander Shvets <alex@githowto.com>
+Date:   Wed Mar 9 10:27:54 2011 -0500
+
+    Added HTML header
+
+commit 8c3228730ed03116815a5cc682e8105e7d981928
+Author: Alexander Shvets <alex@githowto.com>
+Date:   Wed Mar 9 10:27:54 2011 -0500
+
+    Added standard HTML page tags
+
+commit 43628f779cb333dd30d78186499f93638107f70b
+Author: Alexander Shvets <alex@githowto.com>
+Date:   Wed Mar 9 10:27:54 2011 -0500
+
+    Added h1 tag
+
+commit 911e8c91caeab8d30ad16d56746cbd6eef72dc4c
+Author: Alexander Shvets <alex@githowto.com>
+Date:   Wed Mar 9 10:27:54 2011 -0500
+
+    First Commit
+Вот список всех четырех коммитов в репозиторий, которые мы успели совершить.
+01Однострочная история
+Вы полностью контролируете то, что отображает log. Мне, например, нравится однострочный формат:
+ВЫПОЛНИТЕ:
+git log --pretty=oneline
+Вы увидите…
+РЕЗУЛЬТАТ:
+$ git log --pretty=oneline
+fa3c1411aa09441695a9e645d4371e8d749da1dc Added HTML header
+8c3228730ed03116815a5cc682e8105e7d981928 Added standard HTML page tags
+43628f779cb333dd30d78186499f93638107f70b Added h1 tag
+911e8c91caeab8d30ad16d56746cbd6eef72dc4c First Commit
+02Контроль отображения записей
+Есть много вариантов выбора, какие элементы отображаются в логе. Поиграйте со следующими параметрами:
+git log --pretty=oneline --max-count=2
+git log --pretty=oneline --since='5 minutes ago'
+git log --pretty=oneline --until='5 minutes ago'
+git log --pretty=oneline --author=<your name>
+git log --pretty=oneline --all
+В unix-системах доступна справочная страница man git log.
+03Изощряемся
+Вот что я использую для просмотра изменений, сделанных за последнюю неделю. Я добавлю --author=alex, если я хочу увидеть только изменения, которые сделал я.
+git log --all --pretty=format:"%h %cd %s (%an)" --since='7 days ago'
+04Конечный формат лога
+Со временем, я решил, что для большей части моей работы мне подходит следующий формат лога.
+ВЫПОЛНИТЕ:
+git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+Выглядит это примерно так:
+РЕЗУЛЬТАТ:
+$ git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+* fa3c141 2011-03-09 | Added HTML header (HEAD, master) [Alexander Shvets]
+* 8c32287 2011-03-09 | Added standard HTML page tags [Alexander Shvets]
+* 43628f7 2011-03-09 | Added h1 tag [Alexander Shvets]
+* 911e8c9 2011-03-09 | First Commit [Alexander Shvets]
+Давайте рассмотрим его в деталях:
+--pretty="..." — определяет формат вывода.
+%h — укороченный хэш коммита
+%d — дополнения коммита («головы» веток или теги)
+%ad — дата коммита
+%s — комментарий
+%an — имя автора
+--graph — отображает дерево коммитов в виде ASCII-графика
+--date=short — сохраняет формат даты коротким и симпатичным
+Таким образом, каждый раз, когда вы захотите посмотреть лог, вам придется много печатать. К счастью, мы узнаем о git алиасах в следующем уроке.
+05Другие инструменты
+Оба gitx (для Mac) и gitk (для любой платформы) полезны в изучении истории изменений.
+11. Алиасы
+Цели
+Научиться настраивать алиасы и шорткаты для команд git
+01Общие алиасы
+Для пользователей Windows:
+ВЫПОЛНИТЬ:
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.st status
+git config --global alias.br branch
+git config --global alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
+git config --global alias.type 'cat-file -t'
+git config --global alias.dump 'cat-file -p'
+Также, для пользователей Unix/Mac:
+git status, git add, git commit, git checkout — общие команды, для которых полезно иметь сокращения.
+Добавьте следующее в файл .gitconfig в вашем $HOME каталоге.
+ФАЙЛ: .gitconfig
+[alias]
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  type = cat-file -t
+  dump = cat-file -p
+Мы уже успели рассмотреть команды commit и status, в предыдущем уроке рассмотрели команду log и совсем скоро познакомимся с checkout. Главное, что стоит запомнить из этого урока, так это то, что теперь вы можете вводить git st там, где раньше приходилось использовать git status. Аналогичным образом, пишем git co вместо git checkout и git ci вместо git commit. Что лучше всего, команда git hist позволит избежать ввода очень длинной команды log.
+Попробуйте использовать новые команды.
+02Задайте алиас hist в файле .gitconfig
+По большей части, я буду продолжать печатать полные команды в этом руководстве. Единственным исключением будет использование алиаса hist, указанного выше, когда мне понадобится посмотреть git лог. Если вы хотите повторять мои действия, убедитесь, что алиас hist установлен в вашем файле .gitconfig.
+03Type и Dump
+Мы добавили несколько алиасов для команд, которых мы еще не рассматривали. С командой git branch разберемся чуть позже, а команда git cat-file используется для исследования git, в чем мы вскоре убедимся.
+04Алиасы команд (опционально)
+Если ваша оболочка поддерживает алиасы или шорткаты, вы можете добавить алиасы и на этом уровне. Я использую:
+ФАЙЛ: .profile
+alias gs='git status '
+alias ga='git add '
+alias gb='git branch '
+alias gc='git commit'
+alias gd='git diff'
+alias go='git checkout '
+alias gk='gitk --all&'
+alias gx='gitx --all'
+
+alias got='git '
+alias get='git '
+Сокращение go для команды git checkout особенно полезно. Оно позволяет мне вводить:
+go <branch>
+для переключения в отдельную ветку.
+И да, я достаточно часто пишу вместо git get или got, поэтому создам алиасы и для них.
+12. Получение старых версий
+Цели
+Научиться возвращать рабочий каталог к любому предыдущему состоянию.
+Возвращаться назад в историю очень просто. Командаcheckout скопирует любой снимок из репозитория в рабочий каталог.
+01Получите хэши предыдущих версий
+ВЫПОЛНИТЕ:
+git hist
+Примечание: Вы не забыли задать hist в вашем файле .gitconfig? Если забыли, посмотрите еще раз урок по алиасам.
+РЕЗУЛЬТАТ:
+$ git hist
+* fa3c141 2011-03-09 | Added HTML header (HEAD, master) [Alexander Shvets]
+* 8c32287 2011-03-09 | Added standard HTML page tags [Alexander Shvets]
+* 43628f7 2011-03-09 | Added h1 tag [Alexander Shvets]
+* 911e8c9 2011-03-09 | First Commit [Alexander Shvets]
+Изучите данные лога и найдите хэш для первого коммита. Он должен быть в последней строке данных git hist. Используйте этот хэш-код (достаточно первых 7 знаков) в команде ниже. Затем проверьте содержимое файла hello.html.
+ВЫПОЛНИТЕ:
+gitcheckout <hash>
+cat hello.html
+Примечание: Многие команды зависят от хэшевых значений в репозитории. Поскольку ваши хеш-значения будут отличаться от моих, когда вы видите что-то вроде <hash> или <treehash> в команде, подставьте необходимое значение хэш для вашего репозитория.
+Вы увидите…
+РЕЗУЛЬТАТ:
+$ git checkout 911e8c9
+Note: checking out '911e8c9'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at 911e8c9... First Commit
+$ cat hello.html
+Hello, World
+Выходные данные команды checkout очень хорошо объясняют ситуацию. Старые версии git будут ругаться, что не расположены в локальной ветке. В любом случае, сейчас об этом не беспокойтесь.
+Обратите внимание на то, что содержимое файла hello.html является значением по умолчанию.
+02Вернитесь к последней версии в ветке master
+ВЫПОЛНИТЕ:
+gitcheckout master
+cat hello.html
+Вы увидите…
+РЕЗУЛЬТАТ:
+$ git checkout master
+Previous HEAD position was 911e8c9... First Commit
+Switched to branch 'master'
+$ cat hello.html
+<html>
+  <head>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+  </body>
+</html>
+
+
+«master» — имя ветки по умолчанию. Переключая имена веток, вы попадаете на последнюю версию выбранной ветки.
+13. Создание тегов версий
+Цели
+Узнать, как создавать теги для коммитов для использования в будущем
+Давайте назовем текущую версию страницы hello первой (v1).
+01Создайте тег первой версии
+ВЫПОЛНИТЕ:
+git tag v1
+Теперь текущая версия страницы называется v1.
+02Теги для предыдущих версий
+Давайте создадим тег для версии, которая идет перед текущей версией и назовем его v1-beta. В первую очередь нам надо переключиться на предыдущую версию. Вместо поиска до хэш, мы будем использовать ^, обозначающее «родитель v1».
+Если обозначение v1^ вызывает у вас какие-то проблемы, попробуйте также v1~1, указывающее на ту же версию. Это обозначение можно определить как «первую версию предшествующую v1».
+ВЫПОЛНИТЕ:
+git checkout v1^
+cat hello.html
+РЕЗУЛЬТАТ:
+$ git checkout v1^
+Note: checking out 'v1^'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at 8c32287... Added standard HTML page tags
+$ cat hello.html
+<html>
+  <body>
+    <h1>Hello, World!</h1>
+  </body>
+</html>
+Это версия c тегами <html> и <body>, но еще пока без <head>. Давайте сделаем ее версией v1-beta.
+ВЫПОЛНИТЕ:
+git tag v1-beta
+03Переключение по имени тега
+Теперь попробуйте попереключаться между двумя отмеченными версиями.
+ВЫПОЛНИТЕ:
+git checkout v1
+git checkout v1-beta
+РЕЗУЛЬТАТ:
+$ git checkout v1
+Previous HEAD position was 8c32287... Added standard HTML page tags
+HEAD is now at fa3c141... Added HTML header
+$ git checkout v1-beta
+Previous HEAD position was fa3c141... Added HTML header
+HEAD is now at 8c32287... Added standard HTML page tags
+04Просмотр тегов с помощью команды tag
+Вы можете увидеть, какие теги доступны, используя команду git tag.
+ВЫПОЛНИТЕ:
+git tag
+РЕЗУЛЬТАТ:
+$ git tag
+v1
+v1-beta
+05Просмотр Тегов в логах
+Вы также можете посмотреть теги в логе.
+ВЫПОЛНИТЕ:
+git hist master --all
+РЕЗУЛЬТАТ:
+$ git hist master --all
+* fa3c141 2011-03-09 | Added HTML header (v1, master) [Alexander Shvets]
+* 8c32287 2011-03-09 | Added standard HTML page tags (HEAD, v1-beta) [Alexander Shvets]
+* 43628f7 2011-03-09 | Added h1 tag [Alexander Shvets]
+* 911e8c9 2011-03-09 | First Commit [Alexander Shvets]
+Вы можете видеть теги (v1 и v1-beta) в логе вместе с именем ветки (master). Кроме того HEAD показывает коммит, на который вы переключились (на данный момент это v1-beta).
+14. Отмена локальных изменений (до индексации)
+Цели
+Научиться отменять изменения в рабочем каталоге
+01Переключитесь на ветку Master
+Убедитесь, что вы находитесь на последнем коммите ветки master, прежде чем продолжить работу.
+ВЫПОЛНИТЕ:
+git checkout master
+02Измените hello.html
+Иногда случается, что вы изменили файл в рабочем каталоге, и хотите отменить последние коммиты. С этим справится команда checkout.
+Внесите изменение в файл hello.html в виде нежелательного комментария.
+ФАЙЛ: hello.html
+<html>
+  <head>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+    <!-- This is a bad comment.  We want to revert it. -->
+  </body>
+</html>
+03Проверьте состояние
+Сначала проверьте состояние рабочего каталога.
+ВЫПОЛНИТЕ:
+git status
+РЕЗУЛЬТАТ:
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#   modified:   hello.html
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+Мы видим, что файл hello.html был изменен, но еще не проиндексирован.
+04Отмена изменений в рабочем каталоге
+Используйте команду checkout для переключения в версию файла hello.html в репозитории.
+ВЫПОЛНИТЕ:
+git checkout hello.html
+git status
+cat hello.html
+РЕЗУЛЬТАТ:
+$ git checkout hello.html
+$ git status
+# On branch master
+nothing to commit (working directory clean)
+$ cat hello.html
+<html>
+  <head>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+  </body>
+</html>
+Команда status показывает нам, что не было произведено никаких изменений, не зафиксированных в рабочем каталоге. И «нежелательный комментарий» больше не является частью содержимого файла.
+15. Отмена проиндексированных изменений (перед коммитом)
+Цели
+Научиться отменять изменения, которые были проиндексированы
+01Измените файл и проиндексируйте изменения
+Внесите изменение в файл hello.html в виде нежелательного комментария
+ФАЙЛ: HELLO.HTML
+<html>
+  <head>
+    <!-- This is an unwanted but staged comment -->
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+  </body>
+</html>
+Проиндексируйте это изменение.
+ВЫПОЛНИТЕ:
+git add hello.html
+02Проверьте состояние
+Проверьте состояние нежелательного изменения.
+ВЫПОЛНИТЕ:
+git status
+РЕЗУЛЬТАТ:
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#   modified:   hello.html
+#
+Состояния показывает, что изменение было проиндексировано и готово к коммиту.
+03Выполните сброс буферной зоны
+К счастью, вывод состояние показывает нам именно то, что мы должны сделать для отмены индексации изменения.
+ВЫПОЛНИТЕ:
+git reset HEAD hello.html
+РЕЗУЛЬТАТ:
+$ git reset HEAD hello.html
+Unstaged changes after reset:
+M   hello.html
+Команда reset сбрасывает буферную зону к HEAD. Это очищает буферную зону от изменений, которые мы только что проиндексировали.
+Команда reset (по умолчанию) не изменяет рабочий каталог. Поэтому рабочий каталог все еще содержит нежелательный комментарий. Мы можем использовать команду checkout из предыдущего урока, чтобы удалить нежелательные изменения в рабочем каталоге.
+04Переключитесь на версию коммита
+ВЫПОЛНИТЕ:
+git checkout hello.html
+git status
+РЕЗУЛЬТАТ:
+$ git status
+# On branch master
+nothing to commit (working directory clean)
+Наш рабочий каталог опять чист.
+:
