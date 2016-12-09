@@ -1,4 +1,4 @@
-nux
+Linux
 yum install git
 apt-get install git
 zypper in git
